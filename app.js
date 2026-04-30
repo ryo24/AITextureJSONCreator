@@ -2,6 +2,27 @@ const SIZE = 16;
 const NAME_PATTERN = /^[a-z0-9_]+$/;
 const COLOR_PATTERN = /^#[0-9a-fA-F]{6}$/;
 const TRANSPARENT = "transparent";
+const COLOR_MODE_FREE = "free";
+const COLOR_MODE_PRESET = "preset";
+
+const presetColors = [
+  { name: "grass", value: "#5FA33D" },
+  { name: "leaf", value: "#2F6F34" },
+  { name: "dirt", value: "#765638" },
+  { name: "wood", value: "#9A6A3A" },
+  { name: "sand", value: "#D9C783" },
+  { name: "stone", value: "#777777" },
+  { name: "deep_stone", value: "#3A3A43" },
+  { name: "coal", value: "#1B1B1E" },
+  { name: "iron", value: "#C8C8C0" },
+  { name: "gold", value: "#F1C84B" },
+  { name: "diamond", value: "#46D9FF" },
+  { name: "lapis", value: "#2F54B8" },
+  { name: "redstone", value: "#C7352C" },
+  { name: "lava", value: "#F47C20" },
+  { name: "snow", value: "#F2F6F6" },
+  { name: "shadow", value: "#2A2A30" }
+];
 
 const gemPrompt = `【役割・ロール】
 あなたはマインクラフト（Minecraft）のプロのテクスチャデザイナーであり、データ構造を正確に構築できるエンジニアです。ユーザーの要望に基づき、16×16ピクセルのテクスチャ設計データ（ドット絵）をJSONフォーマットでのみ出力するエージェントとして振る舞います。
@@ -71,6 +92,9 @@ const elements = {
   jsonOutput: document.querySelector("#jsonOutput"),
   textureNameInput: document.querySelector("#textureNameInput"),
   colorPicker: document.querySelector("#colorPicker"),
+  freeColorModeButton: document.querySelector("#freeColorModeButton"),
+  presetColorModeButton: document.querySelector("#presetColorModeButton"),
+  presetPalette: document.querySelector("#presetPalette"),
   statusPill: document.querySelector("#statusPill"),
   resourcePath: document.querySelector("#resourcePath"),
   errorBox: document.querySelector("#errorBox"),
@@ -91,6 +115,8 @@ const state = {
   textureType: sampleTexture.texture_type,
   pixels: clonePixels(sampleTexture.pixel_data),
   tool: "paint",
+  colorMode: COLOR_MODE_FREE,
+  presetColor: presetColors[0].value,
   isPointerDown: false
 };
 
@@ -100,6 +126,12 @@ function clonePixels(pixels) {
 
 function normalizeColor(value) {
   return value.toUpperCase();
+}
+
+function getPaintColor() {
+  return state.colorMode === COLOR_MODE_PRESET
+    ? state.presetColor
+    : normalizeColor(elements.colorPicker.value);
 }
 
 function getCurrentTexture() {
@@ -251,7 +283,7 @@ function paintAtEvent(event) {
   if (x < 0 || x >= SIZE || y < 0 || y >= SIZE) {
     return;
   }
-  state.pixels[y][x] = state.tool === "erase" ? TRANSPARENT : normalizeColor(elements.colorPicker.value);
+  state.pixels[y][x] = state.tool === "erase" ? TRANSPARENT : getPaintColor();
   render();
   updateStatus("編集中");
 }
@@ -288,6 +320,50 @@ function updateTypeButtons() {
 function updateToolButtons() {
   elements.paintToolButton.classList.toggle("active", state.tool === "paint");
   elements.eraseToolButton.classList.toggle("active", state.tool === "erase");
+}
+
+function updateColorModeButtons() {
+  elements.freeColorModeButton.classList.toggle("active", state.colorMode === COLOR_MODE_FREE);
+  elements.presetColorModeButton.classList.toggle("active", state.colorMode === COLOR_MODE_PRESET);
+  elements.presetPalette.classList.toggle("is-disabled", state.colorMode !== COLOR_MODE_PRESET);
+}
+
+function updatePresetButtons() {
+  elements.presetPalette.querySelectorAll(".swatch-button").forEach((button) => {
+    button.classList.toggle("active", button.dataset.color === state.presetColor);
+  });
+}
+
+function setColorMode(mode) {
+  state.colorMode = mode;
+  updateColorModeButtons();
+  updatePresetButtons();
+  updateStatus("編集中");
+}
+
+function setPresetColor(color) {
+  state.presetColor = normalizeColor(color);
+  state.colorMode = COLOR_MODE_PRESET;
+  updateColorModeButtons();
+  updatePresetButtons();
+  updateStatus("編集中");
+}
+
+function renderPresetPalette() {
+  elements.presetPalette.textContent = "";
+  presetColors.forEach((color) => {
+    const button = document.createElement("button");
+    button.type = "button";
+    button.className = "swatch-button";
+    button.dataset.color = color.value;
+    button.style.setProperty("--swatch-color", color.value);
+    button.setAttribute("aria-label", `${color.name} ${color.value}`);
+    button.title = `${color.name} ${color.value}`;
+    button.addEventListener("click", () => setPresetColor(color.value));
+    elements.presetPalette.append(button);
+  });
+  updateColorModeButtons();
+  updatePresetButtons();
 }
 
 function updateResourcePath() {
@@ -425,6 +501,14 @@ function bindEvents() {
 
   elements.blockTypeButton.addEventListener("click", () => setTextureType("block"));
   elements.itemTypeButton.addEventListener("click", () => setTextureType("item"));
+  elements.freeColorModeButton.addEventListener("click", () => setColorMode(COLOR_MODE_FREE));
+  elements.presetColorModeButton.addEventListener("click", () => setColorMode(COLOR_MODE_PRESET));
+
+  elements.colorPicker.addEventListener("input", () => {
+    state.colorMode = COLOR_MODE_FREE;
+    updateColorModeButtons();
+    updateStatus("編集中");
+  });
 
   elements.paintToolButton.addEventListener("click", () => {
     state.tool = "paint";
@@ -460,6 +544,7 @@ function bindEvents() {
 
 function init() {
   bindEvents();
+  renderPresetPalette();
   elements.gemPromptOutput.value = gemPrompt;
   elements.jsonInput.value = stringifyTexture(sampleTexture);
   loadTexture(sampleTexture);

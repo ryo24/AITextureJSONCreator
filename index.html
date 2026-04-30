@@ -60,10 +60,17 @@
               <input id="textureNameInput" type="text" value="grass_sample" autocomplete="off" inputmode="latin">
             </label>
             <label>
-              <span>色</span>
+              <span>自由色</span>
               <input id="colorPicker" type="color" value="#3fa34d">
             </label>
           </div>
+
+          <div class="color-mode-row" role="group" aria-label="色選択モード">
+            <button class="toggle-button active" id="freeColorModeButton" type="button">自由色</button>
+            <button class="toggle-button" id="presetColorModeButton" type="button">プリセット</button>
+          </div>
+
+          <div class="preset-palette" id="presetPalette" aria-label="プリセットカラー"></div>
 
           <div class="tool-row" role="group" aria-label="編集ツール">
             <button class="tool-button active" id="paintToolButton" type="button" data-tool="paint">塗る</button>
