@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>AI Texture JSON Creator</title>
+    <link rel="stylesheet" href="./styles.css">
+  </head>
+  <body>
+    <div class="app-shell">
+      <header class="topbar">
+        <div>
+          <p class="eyebrow">Minecraft 16x16 Texture Tool</p>
+          <h1>AI Texture JSON Creator</h1>
+        </div>
+        <div class="status-pill" id="statusPill">未読み込み</div>
+      </header>
+
+      <main class="workspace">
+        <section class="panel input-panel" aria-labelledby="inputTitle">
+          <div class="panel-head">
+            <div>
+              <h2 id="inputTitle">JSON入力</h2>
+              <p>AIが出したJSONを貼り付けます。</p>
+            </div>
+            <button class="secondary-button" id="sampleButton" type="button">サンプル</button>
+          </div>
+
+          <textarea id="jsonInput" spellcheck="false" aria-label="JSON入力"></textarea>
+
+          <div class="button-row">
+            <button class="primary-button" id="loadButton" type="button">読み込み</button>
+            <button class="secondary-button" id="clearButton" type="button">クリア</button>
+          </div>
+
+          <div class="message-box hidden" id="errorBox" role="alert">
+            <h3>エラー</h3>
+            <p id="errorMessage"></p>
+            <label for="repairPrompt">AI修正依頼文</label>
+            <textarea id="repairPrompt" readonly spellcheck="false"></textarea>
+            <button class="secondary-button" id="copyRepairButton" type="button">修正依頼文をコピー</button>
+          </div>
+        </section>
+
+        <section class="panel editor-panel" aria-labelledby="editorTitle">
+          <div class="panel-head">
+            <div>
+              <h2 id="editorTitle">テクスチャ編集</h2>
+              <p>クリックまたはドラッグで塗ります。</p>
+            </div>
+            <div class="type-toggle" role="group" aria-label="テクスチャ種別">
+              <button class="toggle-button active" id="blockTypeButton" type="button" data-type="block">Block</button>
+              <button class="toggle-button" id="itemTypeButton" type="button" data-type="item">Item</button>
+            </div>
+          </div>
+
+          <div class="meta-grid">
+            <label>
+              <span>texture_name</span>
+              <input id="textureNameInput" type="text" value="grass_sample" autocomplete="off" inputmode="latin">
+            </label>
+            <label>
+              <span>色</span>
+              <input id="colorPicker" type="color" value="#3fa34d">
+            </label>
+          </div>
+
+          <div class="tool-row" role="group" aria-label="編集ツール">
+            <button class="tool-button active" id="paintToolButton" type="button" data-tool="paint">塗る</button>
+            <button class="tool-button" id="eraseToolButton" type="button" data-tool="erase">透明</button>
+          </div>
+
+          <div class="canvas-wrap">
+            <canvas id="textureCanvas" width="16" height="16" aria-label="16x16テクスチャキャンバス"></canvas>
+          </div>
+
+          <div class="info-grid">
+            <div>
+              <span class="info-label">サイズ</span>
+              <strong>16 x 16</strong>
+            </div>
+            <div>
+              <span class="info-label">保存先</span>
+              <strong id="resourcePath">textures/block/grass_sample.png</strong>
+            </div>
+          </div>
+        </section>
+
+        <section class="panel output-panel" aria-labelledby="outputTitle">
+          <div class="panel-head">
+            <div>
+              <h2 id="outputTitle">出力</h2>
+              <p>編集後のJSONとPNGを保存します。</p>
+            </div>
+          </div>
+
+          <textarea id="jsonOutput" readonly spellcheck="false" aria-label="JSON出力"></textarea>
+
+          <div class="button-row">
+            <button class="primary-button" id="exportButton" type="button">JSONを書き出し</button>
+            <button class="secondary-button" id="downloadJsonButton" type="button">JSON保存</button>
+            <button class="secondary-button" id="downloadPngButton" type="button">PNG保存</button>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <script src="./app.js"></script>
+  </body>
+</html>
