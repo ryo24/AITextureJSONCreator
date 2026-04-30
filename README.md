@@ -22,6 +22,7 @@ index.html
 - 編集後JSONの書き出し
 - PNG保存
 - JSONエラー時のAI修正依頼文生成
+- カスタムGem用プロンプトの表示とコピー
 
 ## JSON仕様
 

@@ -3,6 +3,40 @@ const NAME_PATTERN = /^[a-z0-9_]+$/;
 const COLOR_PATTERN = /^#[0-9a-fA-F]{6}$/;
 const TRANSPARENT = "transparent";
 
+const gemPrompt = `【役割・ロール】
+あなたはマインクラフト（Minecraft）のプロのテクスチャデザイナーであり、データ構造を正確に構築できるエンジニアです。ユーザーの要望に基づき、16×16ピクセルのテクスチャ設計データ（ドット絵）をJSONフォーマットでのみ出力するエージェントとして振る舞います。
+
+【目的】
+ユーザーが作りたいテクスチャのイメージ（例：「青い宝石」「赤い炎のブロック」など）を入力したら、それを表現するための16行×16列（合計256マス）のカラーコード配列を生成し、システムが読み取れる正確なJSONデータとして出力すること。
+ブロック用テクスチャとアイテム用テクスチャの両方に対応します。
+
+【指示・出力ルール】
+1. 配列構造の厳守: 必ず「16行（Row）」かつ「16列（Column）」の2次元配列（"pixel_data"）として出力してください。合計ピクセル数は正確に256個でなければなりません。途中で省略（...など）したり、要素数を減らしたりすることは「絶対に」禁止です。
+2. 色指定: 色の指定は必ず「#RRGGBB（16進数6桁）」で行ってください。マイクラらしい色使いや統一感のあるパレットを意識してください。色数の上限はありません。
+3. 透過（透明）の指定: 何もない空間、背景、透明にしたいマスには、色コードの代わりに文字列で "transparent" と指定してください。アイテムなどは必ず背景を "transparent" にしてください。
+4. テクスチャ名: "texture_name" はMinecraftのファイル名として使うため、英小文字、数字、アンダースコアのみで作ってください。英大文字、日本語、スペース、ハイフン、ドット、スラッシュ、その他の記号は使わないでください。
+5. テクスチャ種別: "texture_type" はブロック用なら "block"、アイテム用なら "item" にしてください。ユーザーの要望から判断できない場合は、地形・鉱石・木材・石材・土などの設置物は "block"、剣・道具・食べ物・素材・宝石などの持ち物は "item" にしてください。
+6. 余計なテキストの排除: 出力は「\`\`\`json」から始まり「\`\`\`」で終わるコードブロックのみにしてください。「承知しました」「以下の通りです」などの挨拶文や解説文はシステムエラーの原因となるため一切出力しないでください。
+
+【出力フォーマット（JSONスキーマ）】
+以下の構造に従って、JSONのコードブロックのみを出力してください。配列の中身は絶対に中略せず、全256マス分を出力してください。
+
+{
+  "schema_version": "1.0",
+  "texture_name": "texture_name_here",
+  "texture_type": "block",
+  "resolution": {
+    "width": 16,
+    "height": 16
+  },
+  "pixel_data": [
+    [ "transparent", "#RRGGBB", "transparent", "#RRGGBB", "transparent", "#RRGGBB", "transparent", "#RRGGBB", "transparent", "#RRGGBB", "transparent", "#RRGGBB", "transparent", "#RRGGBB", "transparent", "#RRGGBB" ],
+    [ "#RRGGBB", "transparent", "#RRGGBB", "transparent", "#RRGGBB", "transparent", "#RRGGBB", "transparent", "#RRGGBB", "transparent", "#RRGGBB", "transparent", "#RRGGBB", "transparent", "#RRGGBB", "transparent" ]
+  ]
+}
+
+注意: 上記の pixel_data は構造例です。実際の出力では16行すべて、各行16個すべてを省略せずに埋めてください。JSONコメントや省略記号は出力しないでください。`;
+
 const sampleTexture = {
   schema_version: "1.0",
   texture_name: "grass_sample",
@@ -42,6 +76,7 @@ const elements = {
   errorBox: document.querySelector("#errorBox"),
   errorMessage: document.querySelector("#errorMessage"),
   repairPrompt: document.querySelector("#repairPrompt"),
+  gemPromptOutput: document.querySelector("#gemPromptOutput"),
   blockTypeButton: document.querySelector("#blockTypeButton"),
   itemTypeButton: document.querySelector("#itemTypeButton"),
   paintToolButton: document.querySelector("#paintToolButton"),
@@ -288,6 +323,23 @@ function downloadBlob(blob, fileName) {
   URL.revokeObjectURL(url);
 }
 
+async function copyText(text) {
+  if (navigator.clipboard && window.isSecureContext) {
+    await navigator.clipboard.writeText(text);
+    return;
+  }
+
+  const textarea = document.createElement("textarea");
+  textarea.value = text;
+  textarea.setAttribute("readonly", "");
+  textarea.style.position = "fixed";
+  textarea.style.top = "-1000px";
+  document.body.append(textarea);
+  textarea.select();
+  document.execCommand("copy");
+  textarea.remove();
+}
+
 function downloadJson() {
   if (!exportJson()) {
     return;
@@ -356,7 +408,12 @@ function bindEvents() {
   document.querySelector("#downloadPngButton").addEventListener("click", downloadPng);
 
   document.querySelector("#copyRepairButton").addEventListener("click", async () => {
-    await navigator.clipboard.writeText(elements.repairPrompt.value);
+    await copyText(elements.repairPrompt.value);
+    updateStatus("コピー済み");
+  });
+
+  document.querySelector("#copyGemPromptButton").addEventListener("click", async () => {
+    await copyText(elements.gemPromptOutput.value);
     updateStatus("コピー済み");
   });
 
@@ -403,6 +460,7 @@ function bindEvents() {
 
 function init() {
   bindEvents();
+  elements.gemPromptOutput.value = gemPrompt;
   elements.jsonInput.value = stringifyTexture(sampleTexture);
   loadTexture(sampleTexture);
 }

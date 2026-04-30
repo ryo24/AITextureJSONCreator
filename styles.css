@@ -296,12 +296,21 @@ input[type="color"] {
   min-height: 428px;
 }
 
+.prompt-panel {
+  grid-column: 1 / -1;
+}
+
+.prompt-panel textarea {
+  min-height: 360px;
+}
+
 @media (max-width: 1120px) {
   .workspace {
     grid-template-columns: 1fr 1fr;
   }
 
-  .output-panel {
+  .output-panel,
+  .prompt-panel {
     grid-column: 1 / -1;
   }
 }
@@ -320,7 +329,8 @@ input[type="color"] {
     grid-template-columns: 1fr;
   }
 
-  .output-panel {
+  .output-panel,
+  .prompt-panel {
     grid-column: auto;
   }
 

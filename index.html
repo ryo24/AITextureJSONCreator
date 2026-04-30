@@ -102,6 +102,18 @@
             <button class="secondary-button" id="downloadPngButton" type="button">PNG保存</button>
           </div>
         </section>
+
+        <section class="panel prompt-panel" aria-labelledby="promptTitle">
+          <div class="panel-head">
+            <div>
+              <h2 id="promptTitle">カスタムGem用プロンプト</h2>
+              <p>Gem共有前でも、この指示を貼り付けてテクスチャJSONを試せます。</p>
+            </div>
+            <button class="secondary-button" id="copyGemPromptButton" type="button">コピー</button>
+          </div>
+
+          <textarea id="gemPromptOutput" readonly spellcheck="false" aria-label="カスタムGem用プロンプト"></textarea>
+        </section>
       </main>
     </div>
 
