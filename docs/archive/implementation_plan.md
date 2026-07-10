@@ -16,7 +16,7 @@
 
 #### [NEW] JSON入力機能
 - ユーザーがAIから出力されたJSONをペーストできる「入力用テキストエリア」を配置します。
-- JSON仕様は `docs/json_format_spec.md` に従います。
+- JSON仕様は `docs/specs/json_format_spec.md` に従います。
 - `resolution` は `{ "width": 16, "height": 16 }` の形式に統一します。
 - ブロック用とアイテム用の両方を扱うため、`texture_type` として `"block"` または `"item"` を持たせます。
 - ピクセル構造はブロックとアイテムで共通です。

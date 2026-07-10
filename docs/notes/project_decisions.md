@@ -20,7 +20,7 @@ assets/minecraft/textures/item/{texture_name}.png
 
 ## JSON仕様
 
-JSON仕様は [json_format_spec.md](./json_format_spec.md) にまとめます。
+JSON仕様は [json_format_spec.md](../specs/json_format_spec.md) にまとめます。
 
 - `resolution` は `{ "width": 16, "height": 16 }` の数値形式に統一します。
 - `texture_type` は `"block"` または `"item"` を使います。
@@ -82,15 +82,15 @@ JSONが不正な場合は、画面上にエラー内容を表示します。
 - 修正対象の元JSON
 - JSONのみで出力する指示
 
-## カスタムGem用プロンプト
+## 外部AI用プロンプト
 
-- 初期プロトタイプの画面内に、GeminiのカスタムGemへ貼り付ける想定のプロンプトを表示します。
-- Gemがまだ共有されていない状態でも、ユーザーが自分でプロンプトをコピーして試せるようにします。
-- プロンプトの内容は `gemini_prompt.md` と同じ仕様に合わせます。
+- 初期プロトタイプの画面内に、外部AIへ貼り付けて使えるプロンプトを表示します。
+- 特定サービスの共有設定に依存せず、ユーザーが自分でプロンプトをコピーして試せるようにします。
+- プロンプトの内容は `docs/prompts/gemini_custom_gem_prompt.md` と同じ仕様に合わせます。
 
 ## デザイン方針
 
 - Minecraftのトーンを参考にします。
 - ただし完全なゲームUIには寄せすぎず、制作サービスとして使いやすい見た目にします。
-- Stitchで後からデザインを作る前提なので、初期版はプロトタイプ感を残します。
+- 将来のデザイン差し替えをしやすくするため、初期版はプロトタイプ感を残します。
 - UI構造は差し替えやすいように、HTML、CSS、JavaScriptを分けます。

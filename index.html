@@ -3,8 +3,9 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Minecraft向け16x16テクスチャJSONを読み込み、編集し、PNGとJSONとして保存できるブラウザツール">
     <title>AI Texture JSON Creator</title>
-    <link rel="stylesheet" href="./styles.css">
+    <link rel="stylesheet" href="./src/styles.css">
   </head>
   <body>
     <div class="app-shell">
@@ -113,17 +114,17 @@
         <section class="panel prompt-panel" aria-labelledby="promptTitle">
           <div class="panel-head">
             <div>
-              <h2 id="promptTitle">カスタムGem用プロンプト</h2>
-              <p>Gem共有前でも、この指示を貼り付けてテクスチャJSONを試せます。</p>
+              <h2 id="promptTitle">外部AI用プロンプト</h2>
+              <p>お好みのAIへこの指示を貼り付けて、テクスチャJSON生成を試せます。</p>
             </div>
             <button class="secondary-button" id="copyGemPromptButton" type="button">コピー</button>
           </div>
 
-          <textarea id="gemPromptOutput" readonly spellcheck="false" aria-label="カスタムGem用プロンプト"></textarea>
+          <textarea id="gemPromptOutput" readonly spellcheck="false" aria-label="外部AI用プロンプト"></textarea>
         </section>
       </main>
     </div>
 
-    <script src="./app.js"></script>
+    <script src="./src/app.js"></script>
   </body>
 </html>

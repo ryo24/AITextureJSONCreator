@@ -267,4 +267,4 @@ pixel_data の行数が15行です。必ず16行にしてください。
 
 ## 既存プロンプトとの互換性メモ
 
-`gemini_prompt.md` もこの仕様に合わせ、`resolution` は `{ "width": 16, "height": 16 }` の数値形式に統一します。
+`docs/prompts/gemini_custom_gem_prompt.md` もこの仕様に合わせ、`resolution` は `{ "width": 16, "height": 16 }` の数値形式に統一します。
