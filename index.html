@@ -18,28 +18,29 @@
       </header>
 
       <main class="workspace">
-        <section class="panel guide-panel" aria-labelledby="guideTitle">
-          <div class="panel-head">
-            <div>
-              <h2 id="guideTitle">はじめての使い方</h2>
-              <p>Forgeへの登録は、教科書の手順に沿って進めてください。このサイトではテクスチャのデータ作成と画像の確認を行います。</p>
-            </div>
+        <details class="panel guide-panel" open>
+          <summary class="guide-summary" aria-labelledby="guideTitle">
+            <span id="guideTitle" class="guide-title" role="heading" aria-level="2">はじめての使い方</span>
+            <span class="guide-summary-action">開く／閉じる</span>
+          </summary>
+          <div class="guide-content">
+            <p class="guide-intro">Forgeへの登録は、教科書の手順に沿って進めてください。このサイトではテクスチャのデータ作成と画像の確認を行います。</p>
+            <ol class="guide-steps">
+              <li>
+                <strong>JSONを作って読み込む</strong>
+                <span><a href="https://gemini.google.com/gem/1OKcOU_fwWc5_cLuDYnUaWlKAXAwEBjtB?usp=sharing" target="_blank" rel="noopener noreferrer">JSONを作るGem</a>でテクスチャJSONを作り、左の欄に貼り付けて「JSONを読み込んで編集する」を押します。16×16の絵が中央に表示されます。</span>
+              </li>
+              <li>
+                <strong>絵を確認・編集する</strong>
+                <span>中央のマスをクリックまたはドラッグして、色を塗ったり透明にしたりできます。</span>
+              </li>
+              <li>
+                <strong>JSONまたはPNGをダウンロードする</strong>
+                <span>「編集したJSONを表示」で内容を確認できます。「JSONファイルをダウンロード」はデータを、「PNG画像をダウンロード」はテクスチャ画像を端末に保存します。</span>
+              </li>
+            </ol>
           </div>
-          <ol class="guide-steps">
-            <li>
-              <strong>JSONを読み込む</strong>
-              <span>AIが作ったテクスチャJSONを左の欄に貼り付けて、「JSONを読み込んで編集する」を押します。16×16の絵が中央に表示されます。</span>
-            </li>
-            <li>
-              <strong>絵を確認・編集する</strong>
-              <span>中央のマスをクリックまたはドラッグして、色を塗ったり透明にしたりできます。</span>
-            </li>
-            <li>
-              <strong>JSONまたはPNGをダウンロードする</strong>
-              <span>「編集したJSONを表示」で内容を確認できます。「JSONファイルをダウンロード」はデータを、「PNG画像をダウンロード」はテクスチャ画像を端末に保存します。</span>
-            </li>
-          </ol>
-        </section>
+        </details>
 
         <section class="panel input-panel" aria-labelledby="inputTitle">
           <div class="panel-head">

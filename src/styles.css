@@ -109,6 +109,44 @@ h3 {
   background: linear-gradient(135deg, #303b29, #272b22);
 }
 
+.guide-summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  cursor: pointer;
+  list-style: none;
+}
+
+.guide-summary::-webkit-details-marker {
+  display: none;
+}
+
+.guide-title {
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.guide-summary-action {
+  padding: 6px 9px;
+  background: #151812;
+  border: 1px solid var(--edge);
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 800;
+  white-space: nowrap;
+}
+
+.guide-content {
+  padding-top: 12px;
+}
+
+.guide-intro {
+  margin: 0 0 12px;
+  color: var(--muted);
+  font-size: 13px;
+}
+
 .guide-steps {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -156,6 +194,16 @@ h3 {
   color: var(--muted);
   font-size: 13px;
   line-height: 1.55;
+}
+
+.guide-steps a {
+  color: #c8e89d;
+  font-weight: 800;
+}
+
+.guide-steps a:hover,
+.guide-steps a:focus-visible {
+  color: #f0f2e8;
 }
 
 .panel {
@@ -437,5 +485,9 @@ input[type="color"] {
 
   .guide-steps {
     grid-template-columns: 1fr;
+  }
+
+  .guide-summary {
+    align-items: flex-start;
   }
 }
