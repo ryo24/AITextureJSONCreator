@@ -89,7 +89,6 @@ const sampleTexture = {
 const elements = {
   canvas: document.querySelector("#textureCanvas"),
   jsonInput: document.querySelector("#jsonInput"),
-  jsonOutput: document.querySelector("#jsonOutput"),
   textureNameInput: document.querySelector("#textureNameInput"),
   colorPicker: document.querySelector("#colorPicker"),
   freeColorModeButton: document.querySelector("#freeColorModeButton"),
@@ -241,7 +240,6 @@ function loadTexture(texture) {
   updateStatus("編集を開始できます");
   hideError();
   render();
-  exportJson();
 }
 
 function render() {
@@ -292,12 +290,10 @@ function exportJson() {
   const nameError = validateCurrentName();
   if (nameError) {
     showError(nameError, elements.jsonInput.value);
-    return false;
+    return null;
   }
-  elements.jsonOutput.value = stringifyTexture(getCurrentTexture());
   hideError();
-  updateStatus("JSONを表示しました");
-  return true;
+  return stringifyTexture(getCurrentTexture());
 }
 
 function validateCurrentName() {
@@ -417,10 +413,11 @@ async function copyText(text) {
 }
 
 function downloadJson() {
-  if (!exportJson()) {
+  const json = exportJson();
+  if (!json) {
     return;
   }
-  const blob = new Blob([elements.jsonOutput.value], { type: "application/json" });
+  const blob = new Blob([json], { type: "application/json" });
   downloadBlob(blob, `${state.textureName}.json`);
   updateStatus("JSONファイルをダウンロードしました");
 }
@@ -481,7 +478,6 @@ function bindEvents() {
     updateStatus("未読み込み");
   });
 
-  document.querySelector("#exportButton").addEventListener("click", exportJson);
   document.querySelector("#downloadJsonButton").addEventListener("click", downloadJson);
   document.querySelector("#downloadPngButton").addEventListener("click", downloadPng);
 

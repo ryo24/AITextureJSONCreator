@@ -28,15 +28,15 @@
             <ol class="guide-steps">
               <li>
                 <strong>JSONを作って読み込む</strong>
-                <span><a href="https://gemini.google.com/gem/1OKcOU_fwWc5_cLuDYnUaWlKAXAwEBjtB?usp=sharing" target="_blank" rel="noopener noreferrer">JSONを作るGem</a>でテクスチャJSONを作り、左の欄に貼り付けて「JSONを読み込んで編集する」を押します。16×16の絵が中央に表示されます。</span>
+                <span><a href="https://gemini.google.com/gem/1OKcOU_fwWc5_cLuDYnUaWlKAXAwEBjtB?usp=sharing" target="_blank" rel="noopener noreferrer">JSONを作るGem</a>でテクスチャJSONを作り、左の欄に貼り付けて「JSONを読み込んで編集する」を押します。16×16の絵が中央に表示されます。エラーが出たときは、表示された修正依頼文をコピーしてAIに渡しましょう。</span>
               </li>
               <li>
                 <strong>絵を確認・編集する</strong>
-                <span>中央のマスをクリックまたはドラッグして、色を塗ったり透明にしたりできます。</span>
+                <span>ブロックなら「Block」、剣や道具など持ち物なら「Item」を選びます。texture_nameには英小文字・数字・アンダースコアだけで名前を入れます（例: <code>magic_sword</code>）。中央のマスは、自由色・プリセット色で塗ったり「透明」にしたりできます。Itemは背景を透明にするのがおすすめです。</span>
               </li>
               <li>
-                <strong>JSONまたはPNGをダウンロードする</strong>
-                <span>「編集したJSONを表示」で内容を確認できます。「JSONファイルをダウンロード」はデータを、「PNG画像をダウンロード」はテクスチャ画像を端末に保存します。</span>
+                <strong>PNG画像をダウンロードする</strong>
+                <span>基本は「PNG画像をダウンロード」を使います。PNGはテクスチャ画像です。「JSONを共有・バックアップ用に保存」は、このサイトで再編集したり誰かに渡したりするためのデータです。Forge Modで使うためのJSONとは別物なので、Forge用JSONは別の教科書を見てください。</span>
               </li>
             </ol>
           </div>
@@ -121,17 +121,14 @@
         <section class="panel output-panel" aria-labelledby="outputTitle">
           <div class="panel-head">
             <div>
-              <h2 id="outputTitle">完成データを確認・ダウンロード</h2>
-              <p>JSONは編集したデータ、PNGはテクスチャの画像です。必要な形式を選んで端末に保存できます。</p>
+              <h2 id="outputTitle">PNG画像をダウンロード</h2>
+              <p>基本はPNG画像を保存します。JSONは、このサイトでの再編集や共有に使うバックアップ用データです。Forge Mod用のJSONとは別物なので、Forge用JSONは別の教科書を見てください。</p>
             </div>
           </div>
 
-          <textarea id="jsonOutput" readonly spellcheck="false" aria-label="JSON出力"></textarea>
-
           <div class="button-row">
-            <button class="primary-button" id="exportButton" type="button">編集したJSONを表示</button>
-            <button class="secondary-button" id="downloadJsonButton" type="button">JSONファイルをダウンロード</button>
-            <button class="secondary-button" id="downloadPngButton" type="button">PNG画像をダウンロード</button>
+            <button class="primary-button" id="downloadPngButton" type="button">PNG画像をダウンロード（基本）</button>
+            <button class="secondary-button" id="downloadJsonButton" type="button">JSONを共有・バックアップ用に保存</button>
           </div>
         </section>
 

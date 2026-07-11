@@ -432,10 +432,6 @@ input[type="color"] {
   font-size: 13px;
 }
 
-.output-panel textarea {
-  min-height: 428px;
-}
-
 .prompt-panel {
   grid-column: 1 / -1;
 }
