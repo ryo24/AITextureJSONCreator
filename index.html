@@ -135,17 +135,21 @@
           </div>
         </section>
 
-        <section class="panel prompt-panel" aria-labelledby="promptTitle">
-          <div class="panel-head">
-            <div>
-              <h2 id="promptTitle">外部AI用プロンプト</h2>
-              <p>お好みのAIへこの指示を貼り付けて、テクスチャJSON生成を試せます。</p>
+        <details class="panel prompt-panel">
+          <summary class="guide-summary" aria-labelledby="promptTitle">
+            <span id="promptTitle" class="guide-title" role="heading" aria-level="2">外部AI用プロンプト</span>
+            <span class="guide-summary-action">開く／閉じる</span>
+          </summary>
+          <div class="guide-content">
+            <div class="panel-head">
+              <div>
+                <p>お好みのAIへこの指示を貼り付けて、テクスチャJSON生成を試せます。</p>
+              </div>
+              <button class="secondary-button" id="copyGemPromptButton" type="button">コピー</button>
             </div>
-            <button class="secondary-button" id="copyGemPromptButton" type="button">コピー</button>
+            <textarea id="gemPromptOutput" readonly spellcheck="false" aria-label="外部AI用プロンプト"></textarea>
           </div>
-
-          <textarea id="gemPromptOutput" readonly spellcheck="false" aria-label="外部AI用プロンプト"></textarea>
-        </section>
+        </details>
       </main>
     </div>
 
