@@ -18,11 +18,34 @@
       </header>
 
       <main class="workspace">
+        <section class="panel guide-panel" aria-labelledby="guideTitle">
+          <div class="panel-head">
+            <div>
+              <h2 id="guideTitle">はじめての使い方</h2>
+              <p>Forgeへの登録は、教科書の手順に沿って進めてください。このサイトではテクスチャのデータ作成と画像の確認を行います。</p>
+            </div>
+          </div>
+          <ol class="guide-steps">
+            <li>
+              <strong>JSONを読み込む</strong>
+              <span>AIが作ったテクスチャJSONを左の欄に貼り付けて、「JSONを読み込んで編集する」を押します。16×16の絵が中央に表示されます。</span>
+            </li>
+            <li>
+              <strong>絵を確認・編集する</strong>
+              <span>中央のマスをクリックまたはドラッグして、色を塗ったり透明にしたりできます。</span>
+            </li>
+            <li>
+              <strong>JSONまたはPNGをダウンロードする</strong>
+              <span>「編集したJSONを表示」で内容を確認できます。「JSONファイルをダウンロード」はデータを、「PNG画像をダウンロード」はテクスチャ画像を端末に保存します。</span>
+            </li>
+          </ol>
+        </section>
+
         <section class="panel input-panel" aria-labelledby="inputTitle">
           <div class="panel-head">
             <div>
-              <h2 id="inputTitle">JSON入力</h2>
-              <p>AIが出したJSONを貼り付けます。</p>
+              <h2 id="inputTitle">AI生成JSONを読み込む</h2>
+              <p>AIが出したJSONを貼り付けて、16×16のテクスチャとして開きます。</p>
             </div>
             <button class="secondary-button" id="sampleButton" type="button">サンプル</button>
           </div>
@@ -30,7 +53,7 @@
           <textarea id="jsonInput" spellcheck="false" aria-label="JSON入力"></textarea>
 
           <div class="button-row">
-            <button class="primary-button" id="loadButton" type="button">読み込み</button>
+            <button class="primary-button" id="loadButton" type="button">JSONを読み込んで編集する</button>
             <button class="secondary-button" id="clearButton" type="button">クリア</button>
           </div>
 
@@ -97,17 +120,17 @@
         <section class="panel output-panel" aria-labelledby="outputTitle">
           <div class="panel-head">
             <div>
-              <h2 id="outputTitle">出力</h2>
-              <p>編集後のJSONとPNGを保存します。</p>
+              <h2 id="outputTitle">完成データを確認・ダウンロード</h2>
+              <p>JSONは編集したデータ、PNGはテクスチャの画像です。必要な形式を選んで端末に保存できます。</p>
             </div>
           </div>
 
           <textarea id="jsonOutput" readonly spellcheck="false" aria-label="JSON出力"></textarea>
 
           <div class="button-row">
-            <button class="primary-button" id="exportButton" type="button">JSONを書き出し</button>
-            <button class="secondary-button" id="downloadJsonButton" type="button">JSON保存</button>
-            <button class="secondary-button" id="downloadPngButton" type="button">PNG保存</button>
+            <button class="primary-button" id="exportButton" type="button">編集したJSONを表示</button>
+            <button class="secondary-button" id="downloadJsonButton" type="button">JSONファイルをダウンロード</button>
+            <button class="secondary-button" id="downloadPngButton" type="button">PNG画像をダウンロード</button>
           </div>
         </section>
 

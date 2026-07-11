@@ -238,7 +238,7 @@ function loadTexture(texture) {
   state.pixels = clonePixels(texture.pixel_data);
   elements.textureNameInput.value = state.textureName;
   updateTypeButtons();
-  updateStatus("読み込み済み");
+  updateStatus("編集を開始できます");
   hideError();
   render();
   exportJson();
@@ -296,7 +296,7 @@ function exportJson() {
   }
   elements.jsonOutput.value = stringifyTexture(getCurrentTexture());
   hideError();
-  updateStatus("書き出し済み");
+  updateStatus("JSONを表示しました");
   return true;
 }
 
@@ -422,6 +422,7 @@ function downloadJson() {
   }
   const blob = new Blob([elements.jsonOutput.value], { type: "application/json" });
   downloadBlob(blob, `${state.textureName}.json`);
+  updateStatus("JSONファイルをダウンロードしました");
 }
 
 function downloadPng() {
@@ -447,6 +448,7 @@ function downloadPng() {
   pngCanvas.toBlob((blob) => {
     if (blob) {
       downloadBlob(blob, `${state.textureName}.png`);
+      updateStatus("PNG画像をダウンロードしました");
     }
   }, "image/png");
 }
